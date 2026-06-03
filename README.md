@@ -8,9 +8,43 @@ A zero-dependency CLI for the [Unipile API](https://developer.unipile.com/docs/g
 curl -fsSL https://raw.githubusercontent.com/fuushyn/unipile-cli/main/install.sh | bash
 ```
 
-This installs:
-- the `unipile` CLI to `~/.local/bin/unipile`
-- the Claude skill to `~/.claude/skills/unipile/SKILL.md`
+This installs the `unipile` CLI to `~/.local/bin/unipile` and the skill into whichever
+agents you choose. Run on a terminal, you get an interactive picker; otherwise it
+installs to whatever agents are already on the machine.
+
+### Choose which agents get the skill
+
+Built-in agents (the skill is the same `SKILL.md` for all of them):
+
+| Agent | Skills directory |
+|-------|------------------|
+| Claude Code | `~/.claude/skills` |
+| OpenAI Codex | `~/.codex/skills` |
+| Cursor | `~/.cursor/skills` |
+| Gemini CLI | `~/.gemini/skills` |
+| Hermes | `~/.hermes/skills` |
+| OpenClaw | `~/.openclaw/skills` |
+
+```bash
+# pick specific agents
+curl -fsSL .../install.sh | bash -s -- --agents claude,codex,hermes
+
+# every built-in agent
+curl -fsSL .../install.sh | bash -s -- --all
+
+# via env var
+curl -fsSL .../install.sh | AGENTS=claude,openclaw bash
+
+# list built-in agents
+curl -fsSL .../install.sh | bash -s -- --list
+```
+
+The list is **not exhaustive** — point at any other agent that reads `SKILL.md`
+skills with `--dir` (repeatable):
+
+```bash
+curl -fsSL .../install.sh | bash -s -- --agents claude --dir ~/.myagent/skills
+```
 
 Requires `python3` (standard library only — no pip install).
 
